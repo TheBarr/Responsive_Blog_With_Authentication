@@ -17,13 +17,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
+
 # from dotenv import load_dotenv -- switched off coz deployment
 
 
 # load_dotenv()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
+app.config["SECRET_KEY"] = os.environ.get("FLASK_KEY")
 print(os.getenv("SECRET_KEY"))
 ckeditor = CKEditor(app)
 Bootstrap5(app)
@@ -49,7 +50,7 @@ gravatar = Gravatar(
 )
 
 # CONNECT TO DB
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URI", "sqlite:////blog.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI", "sqlite:///blog.db")
 db = SQLAlchemy()
 db.init_app(app)
 
