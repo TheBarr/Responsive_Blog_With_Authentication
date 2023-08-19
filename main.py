@@ -17,6 +17,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
+import psycopg2
+
 # from dotenv import load_dotenv
 
 
@@ -48,7 +50,9 @@ gravatar = Gravatar(
 )
 
 # CONNECT TO DB
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI")
+db_uri = os.environ.get("DB_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = psycopg2.connect(db_uri)
+
 db = SQLAlchemy()
 db.init_app(app)
 
