@@ -119,9 +119,7 @@ def register():
         ).scalar():
             flash("You have already signed up with this email. Log in instead!")
             return redirect(url_for("login"))
-        password = generate_password_hash(
-            form.password.data, method="pbkdf2", salt_length=16
-        )
+        password = generate_password_hash(form.password.data)
         user = User(password=password, email=form.email.data, name=form.name.data)
         db.session.add(user)
         db.session.commit()
